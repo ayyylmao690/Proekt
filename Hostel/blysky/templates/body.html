@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <link rel="stylesheet" type="text/css" href="/static/style.css">
+        <title>Site</title>
+    </head>
+    <body>
+        <div class="menu">
+            <div id = "logo">
+                YaYeblan.ru
+            </div>
+            <ul>
+                <a href='#'><li>Проверить бронь</li></a>
+                <a href='#'><li style="border-radius: 0px 0px 0px 25px;">Личный кабинет</li></a>
+            </ul>
+        </div>
+        {% block searchHotel %}
+        <section>
+            <form action="search-results" method="GET">
+                {% csrf_token %}
+                <div id = 'search-form'>
+                    <div id="search-body">
+                        <input type="text" name="townStart" placeholder="Откуда летим" required>
+                        <select name="countryWhere" required>
+                            {% for country in countries %}
+                                <option value="{{country.id}}">{{country}}</option>
+                            {% endfor %}
+                        </select>
+                        <input type="date" name="dateStart" required>
+                        <input type="date" name="dateEnd" required>
+                        <input type="number" step="1" name="howMany" min="0" required>
+                    </div>
+
+                    <input type='submit'>
+
+                </div>
+            </form>
+            {%for hotel in searchResults%}
+                {{hotel.town}}
+            {%endfor%}
+        </section>
+        {% endblock %}
+    </body>
+</html>
